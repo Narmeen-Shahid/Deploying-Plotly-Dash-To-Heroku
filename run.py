@@ -5,6 +5,9 @@ import pandas as pd
 import plotly as ply
 import base64
 import dash_table
+
+
+server = app.server
 #app main layout
 app.layout = html.Div(style={'backgroundColor': '#E5E8E6'},children=[
      
