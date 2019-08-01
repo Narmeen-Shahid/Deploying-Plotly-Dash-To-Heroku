@@ -397,7 +397,7 @@ def update_image_src(selector):
 
 
 #app main layout
-car_layout = html.Div(style={'backgroundImage': 'url(/pic2.JPG)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+car_layout = html.Div(style={'backgroundImage': 'url(pic2.jpg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
      
         # header
 
