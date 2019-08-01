@@ -27,7 +27,7 @@ app.layout = html.Div([
 
 
 
-index_page = html.Div(style={'backgroundImage': 'url(blob:https://web.whatsapp.com/4c5e323d-9f03-4a6d-8fbd-4fa78f6a526b)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+index_page = html.Div(style={'backgroundImage': 'url(https://www.carconfident.ca/wp-content/uploads/2019/05/01585ca88d26024.jpg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
  
          html.Br(),
          html.Br(),
