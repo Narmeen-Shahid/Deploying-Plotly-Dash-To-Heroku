@@ -6,11 +6,12 @@ import plotly as ply
 import base64
 import dash_table
 
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
 server = app.server
 
+#app main layout
 app.layout = html.Div(style={'backgroundColor': '#E5E8E6'},children=[
      
         # header
@@ -66,8 +67,10 @@ app.layout = html.Div(style={'backgroundColor': '#E5E8E6'},children=[
     className="row",
     
    
-)
+    
 
+
+)
 @app.callback(dash.dependencies.Output('tabs-content', 'children'),
               [dash.dependencies.Input('tabs', 'value')])
 def render_content(tab):
@@ -129,7 +132,9 @@ def render_content(tab):
     },
 ),  
     
-         
+          
+
+ 
 ]),
 
     elif tab == 'graph_layout':
