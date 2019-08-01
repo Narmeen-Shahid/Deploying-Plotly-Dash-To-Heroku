@@ -27,7 +27,7 @@ app.layout = html.Div([
 
 
 
-index_page = html.Div(style={'backgroundImage': 'url(/pic4.jpg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+index_page = html.Div(style={'backgroundImage': 'url(pic4.jpg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
  
          html.Br(),
          html.Br(),
