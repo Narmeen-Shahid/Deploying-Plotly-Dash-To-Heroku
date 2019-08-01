@@ -14,14 +14,94 @@ import dash_table
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.config.suppress_callback_exceptions = True
+
+app.layout = html.Div([
+
+    dcc.Location(id='url', refresh=False),
+
+    html.Div(id='page-content')
+
+])
+
+
+
+index_page = html.Div(style={'backgroundImage': 'url(/assets/pic4.JPG)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+ 
+         html.Br(),
+         html.Br(),
+  html.H2(className='what-is', children="Predicition of Vehicle Insurance Premium",style={ 'color':'black','text-align': 'center', 'fontSize': 35, 'font-family': 'Courgette'}),
+  html.H4(className='what-is', children="Data Science",style={ 'color':'black','text-align': 'center', 'fontSize': 25, 'font-family': 'Courgette'}),  
+        html.Link(href="https://use.fontawesome.com/releases/v5.2.0/css/all.css",rel="stylesheet"),
+        html.Link(href="https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css",rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Dosis", rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Open+Sans", rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Ubuntu", rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" ,rel="stylesheet"),
+        html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet"),
+         html.Link(href="https://fontawesome.com/icons"),
+        html.Br(),
+        
+        
+        html.H2(className='what-is', children="Overview of Dash Framework For building Dashboards",style={ 'color':'black','text-align': 'center', 'fontSize': 20, 'font-family': 'Courgette'}),
+        
+      
+html.Div(style={'color':'red','text-align': 'center'},
+   className='row',
+   children=[
+      html.Div(className='two columns', style={'color':'red', 'marginLeft': 195}),
+      dcc.Link('Click here for Vehicle Insurance Premium Dashboard visualizations! ', href='/car', style={'color':'red','text-align': 'center', 'justify-content': 'center'})
+   ]
+),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+     
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+         html.Br(),
+        
+      
+     
+        
+        html.H2(className='what-is', children="Narmin | Arisha | Ramsha | 8/1/2019",style={ 'color':'black','text-align': 'center', 'fontSize': 20, 'font-family': 'Courgette'}),
+            
+
+])
+
+@app.callback(dash.dependencies.Output('page-content', 'children'),
+
+              [dash.dependencies.Input('url', 'pathname')])
+
+def display_page(pathname):
+      if pathname == '/car':
+        return car_layout
+
+      else:
+
+        return index_page
+
+
+
+
+
 df = pd.read_csv('insurance_75000.csv',encoding='latin1')
-server = app.server
 
 colors = {
     'background': '#111111',
     'text':'#FFFFFF',
     
     }
+
 
 all_options = {
 
@@ -317,7 +397,7 @@ def update_image_src(selector):
 
 
 #app main layout
-app.layout = html.Div(style={'backgroundColor': '#E5E8E6'},children=[
+car_layout = html.Div(style={'backgroundImage': 'url(/assets/pic2.JPG)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
      
         # header
 
@@ -383,6 +463,11 @@ def render_content(tab):
     if tab == 'about_layout':
         return  html.Div(className='control-tab',children=[
                 
+
+
+
+
+
               html.H2(className='what-is', children="About Our Project",style={ 'color':'black','text-align': 'center', 'fontSize': 35, 'font-family': 'EB Garamond'}),
                  
                         html.P('The project Predication of vehicle insurance premium is a research project designed for predicting the premium based on driver behavior.The goal of this project is to see how well various statistical methods perform in predicting of insurance premium based on the characteristics of the insured customer’s vehicles.Prediction of Vehicle Insurance Premium will help the insurance issuers to calculate the accurate insurance and also enable the owner of the vehicle to calculate the insurance of their own vehicle by themselves for this particular dataset available from “TPL Trakker LTD” company. A number of factors will determine premium calculation rates, among them a drivers, age, Vehicle registration number ,Vehicle Model number ,Type of vehicle ,Crashes and injuries ,Claim history, Occupation, Driver behavior, Add on Date, Make, Model, Gear Type, Gender, Brake Operation, Vehicle width, Vehicle height, Average Fuel Consumption respectively.However, this contest focused on the relationship between customer’s behavior and vehicle characteristics well as other characteristics associated with the insurance premium policies.',style={ 'color': 'black','fontSize': 15,'font-family': 'Philosopher'}),
@@ -392,15 +477,15 @@ def render_content(tab):
                        html.P('While After running the application (DASHBOARD) the UX will appear on the screen having dashboard view with the Heading name PREDICTION OF VEHICLE INSURANCE PREMIUM moreover we have graph summary view, data summary view, visualizations view of models with their confusion matrix On the other hand the backend working is carried out through different algorithms that are random forest and logistic regressions svm, knn, decision tree through which working on the whole data is being carried on.',style={ 'color': 'black','fontSize': 15,'font-family': 'Philosopher'}),
 
                         html.P('Decision Tree is used first finding the importance of variables and Confusion matrix is being obtained. Furthermore it also defines accuracy and in our case it is ’93.86%’ with its graphical representation and confusion matrix calculation respectively.',style={'color':'black','fontSize': 15,'font-family': 'Philosopher'}),
-                     html.Div([
+                     html.Div(style={ 'color':'black','fontSize': 10 ,'font-family': 'Philosopher'},children=[
                             'Reference: ',
                             html.A('PlotlyDash',
                                    href='https://plot.ly/dash/)',style={ 'color':'black','fontSize': 10, 'font-family': 'Philosopher'})
                         ]),
-                        html.Div([
-                            'For a look into Predicition of Vehicle Insurance Premium ,visit the '
+                        html.Div(style={ 'color':'black','fontSize': 10 ,'font-family': 'Philosopher'},children=[
+                            'For a look into Predicition of Vehicle Insurance Premium Files Details ,visit the '
                             'original repository ',
-                            html.A('here', href='https://github.com/nicgirault/circosJS)',style={ 'color':'black','fontSize': 10 ,'font-family': 'Philosopher'}),
+                            html.A('here', href='https://github.com/Narmeen-Shahid/Deploying-Plotly-Dash-To-Heroku',style={ 'color':'black','fontSize': 10 ,'font-family': 'Philosopher'}),
                             '.'
                         ]),
                      
