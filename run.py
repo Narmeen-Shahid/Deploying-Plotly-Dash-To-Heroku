@@ -6,10 +6,315 @@ import plotly as ply
 import base64
 import dash_table
 
+#table content declaration
+
+
+
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+df = pd.read_csv('insurance_75000.csv',encoding='latin1')
 server = app.server
+
+colors = {
+    'background': '#111111',
+    'text':'#FFFFFF',
+    
+    }
+
+all_options = {
+
+    'Dimensions': ['Place','AssembledDate','AddonDate','VehicleReg','CustomerName','Package','Make','GearType','Gender','Address','VehicleType','FuelType','BrakeOperation','StatusText'],
+
+    'Measures': ['Model','CC','VehicleWidth','VehicleHeight','AvgFuelConsumption','Speed','Odo'],
+
+    'All': ['Model','CC','VehicleWidth','VehicleHeight','AvgFuelConsumption','Speed','Odo','Place','AssembbledDate','AddonDate','VehicleReg','CustomerName','Package','Make','GearType','Gender','Address','VehicleType','FuelType','BrakeOperation','StatusText']
+
+}
+
+
+
+insurance_data = {
+
+    'VehicleReg': {'x': df['VehicleReg'], 'y': df['Premium']},
+
+    'CustomerName': {'x': df['CustomerName'], 'y': df['Premium']},
+
+    'Package':  {'x': df['Package'], 'y': df['Premium']},
+
+    'AddonDate': {'x': df['AddonDate'], 'y': df['Premium']},
+
+    'Make':  {'x': df['Make'], 'y': df['Premium']},
+
+    'Model':  {'x': df['Model'], 'y': df['Premium']},
+
+    'CC':  {'x': df['CC'], 'y': df['Premium']},
+
+    'GearType': {'x': df['GearType'], 'y': df['Premium']},
+
+    'Gender':  {'x': df['Gender'], 'y': df['Premium']},
+
+    'Address':  {'x': df['Address'], 'y': df['Premium']},
+
+    'VehicleType':  {'x': df['VehicleType'], 'y': df['Premium']},
+
+    'VehicleWidth':  {'x': df['VehicleWidth'], 'y': df['Premium']},
+
+    'VehicleHeight':  {'x': df['VehicleHeight'], 'y': df['Premium']},
+
+    'FuelType':  {'x': df['FuelType'], 'y': df['Premium']},
+
+    'BrakeOperation':  {'x': df['BrakeOperation'], 'y': df['Premium']},
+
+    'AvgFuelConsumption':  {'x': df['AvgFuelConsumption'], 'y': df['Premium']},
+
+    'StatusText':  {'x': df['StatusText'], 'y': df['Premium']},
+
+    'Speed':  {'x': df['Speed'], 'y': df['Premium']},
+
+    'Odo':  {'x': df['Odo'], 'y': df['Premium']},
+
+    'AssembledDate':  {'x': df['AssembledDate'], 'y': df['Premium']},
+
+    'Place':  {'x': df['Place'], 'y': df['Premium']}
+
+}
+
+
+app.config.suppress_callback_exceptions = True
+
+graph_layout = html.Div([
+    html.H1(children='Graphical Reresenatiom Of Models With Numeric & Non-Numeric Attributes',style={ 'color':'black','text-align': 'center', 'fontSize': 30, 'font-family': 'EB Garamond'},
+           ),
+
+    
+           html.Div(
+                [
+                    html.P(children='Select Category',
+                           style={
+                              'text-align': 'center',
+                              'fontSize':21,
+                              'color': 'black',
+                              'font-family': 'Josefin Sans',}),
+                    dcc.RadioItems(
+                            id = 'Category',
+                            options=[{'label': k, 'value': k} for k in all_options.keys()],
+                            value='Measures',
+                            style={'color':'black','text-align': 'center','font-family': 'Josefin Sans','fontSize': 15},
+                            labelStyle={'display': 'inline-block'}
+                    ),
+                ],
+               
+            ),
+             
+     html.Br(),
+    
+
+
+            html.Div(
+                [
+                   html.P(children='Select Features',
+                          style={
+                              'text-align': 'center',
+                              'fontSize': 21,
+                              'color': 'black',
+                              'font-family': 'Josefin Sans'}),
+             dcc.Checklist(
+                    id='Features',
+
+
+
+                    values=['Package'],
+                    
+                     
+                     labelStyle={'display': 'inline-block'},
+                     style={
+                         'color': 'black',
+                         'text-align': 'center',
+                         'font-family': 'Josefin Sans',
+                         'fontSize': 15
+                         
+                     }
+                    
+                 
+                    ),
+                ],
+                
+            ),
+          
+   html.Br(),
+   html.Br(),
+   
+  
+    html.Div([
+
+        html.Div([
+
+            dcc.Graph(
+
+                id='example-graph'
+
+            )], className= 'six columns'
+
+            ),
+   
+
+        html.Div([
+
+            dcc.Graph(
+
+                id='example-graph-2'
+
+            )], className= 'six columns'
+
+            )
+
+    ], className="row"),
+
+
+
+
+    html.Div(id='page-1-content'),
+   
+], className='ten columns offset-by-one')
+
+
+@app.callback(
+
+    dash.dependencies.Output('Features', 'options'),
+
+    [dash.dependencies.Input('Category', 'value')])
+
+def set_cities_options(selected_category):
+
+    return [{'label': i, 'value': i} for i in all_options[selected_category]]
+
+
+
+@app.callback(
+
+    dash.dependencies.Output('example-graph', 'figure'),
+
+    [dash.dependencies.Input('Features', 'values')])
+
+def update_image_src(selector):
+
+    data = []
+
+    print (selector)
+
+    for Feature in selector:
+
+        data.append({'x': insurance_data[Feature]['x'], 'y': insurance_data[Feature]['y'],
+
+                    'type': 'bar','name': Feature})
+
+    figure = {
+
+        'data': data,
+
+        'layout': {
+
+            'title': 'Box Graph Represenation of Selected Category & Feature',
+
+            'xaxis' : dict(
+
+                title='x Axis',
+
+                titlefont=dict(
+
+                family='Courier New, monospace',
+
+                size=20,
+
+                color='#7f7f7f',
+
+                
+
+            )),
+
+            'yaxis' : dict(
+
+                title='y Axis',
+
+                titlefont=dict(
+
+                family='Helvetica, monospace',
+
+                size=20,
+
+                color='#7f7f7f'
+
+            ))
+
+        }
+
+    }
+
+    return figure
+
+
+
+
+@app.callback(
+
+    dash.dependencies.Output('example-graph-2', 'figure'),
+
+    [dash.dependencies.Input('Features', 'values')])
+
+def update_image_src(selector):
+
+    data = []
+
+    for city in selector:
+
+        data.append({'x': insurance_data[city]['x'], 'y': insurance_data[city]['y'],
+
+                    'type': 'line', 'name': city})
+
+    figure = {
+
+        'data': data,
+
+        'layout': {
+
+            'title': 'Line Graph Represenation of Selected Category & Feature',
+
+            'xaxis' : dict(
+
+                title='x Axis',
+
+                titlefont=dict(
+
+                family='Courier New, monospace',
+
+                size=20,
+
+                color='#7f7f7f'
+
+            )),
+
+            'yaxis' : dict(
+
+                title='y Axis',
+
+                titlefont=dict(
+
+                family='Helvetica, monospace',
+
+                size=20,
+
+                color='#7f7f7f'
+
+            ))
+
+        }
+
+    }
+
+    return figure
+
 
 #app main layout
 app.layout = html.Div(style={'backgroundColor': '#E5E8E6'},children=[
@@ -71,6 +376,7 @@ app.layout = html.Div(style={'backgroundColor': '#E5E8E6'},children=[
 
 
 )
+
 @app.callback(dash.dependencies.Output('tabs-content', 'children'),
               [dash.dependencies.Input('tabs', 'value')])
 def render_content(tab):
