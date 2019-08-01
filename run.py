@@ -27,7 +27,7 @@ app.layout = html.Div([
 
 
 
-index_page = html.Div(style={'backgroundImage': 'url(https://www.chevrolet.com/content/dam/chevrolet/na/us/english/vdc-collections/2019/cars/cruze/cruze/01-images/2019-cruze-sedan-1sf-g9k-profile-bottom-left.jpg?imwidth=1200)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+index_page = html.Div(style={'backgroundImage': 'url(blob:https://web.whatsapp.com/4c5e323d-9f03-4a6d-8fbd-4fa78f6a526b)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
  
          html.Br(),
          html.Br(),
