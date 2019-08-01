@@ -397,7 +397,7 @@ def update_image_src(selector):
 
 
 #app main layout
-car_layout = html.Div(style={'backgroundImage': 'url(https://www.mercedes-benz.com.sg/passengercars/mercedes-benz-cars/models/c-class/saloon/equipment/equipment-line/_jcr_content/comparisonslider/par/comparisonslide_7143/exteriorImage.MQ6.12.20180505173134.jpeg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+car_layout = html.Div(style={'backgroundImage': 'url(https://car-images.bauersecure.com/upload/19991/images/1752x1168/newjaguarxj_2010_photo_2.jpg?mode=max&quality=90&scale=down)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
      
         # header
 
