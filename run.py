@@ -27,7 +27,7 @@ app.layout = html.Div([
 
 
 
-index_page = html.Div(style={'backgroundImage': 'url(pic4.jpg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+index_page = html.Div(style={'backgroundImage': 'url(https://www.chevrolet.com/content/dam/chevrolet/na/us/english/vdc-collections/2019/cars/cruze/cruze/01-images/2019-cruze-sedan-1sf-g9k-profile-bottom-left.jpg?imwidth=1200)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
  
          html.Br(),
          html.Br(),
@@ -397,7 +397,7 @@ def update_image_src(selector):
 
 
 #app main layout
-car_layout = html.Div(style={'backgroundImage': 'url(pic2.jpg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+car_layout = html.Div(style={'backgroundImage': 'url('pic2.jpg')','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
      
         # header
 
