@@ -397,7 +397,7 @@ def update_image_src(selector):
 
 
 #app main layout
-car_layout = html.Div(style={'backgroundImage': 'url(https://car-images.bauersecure.com/upload/19991/images/1752x1168/newjaguarxj_2010_photo_2.jpg?mode=max&quality=90&scale=down)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
+car_layout = html.Div(style={'backgroundImage': 'url((https://media.istockphoto.com/photos/toy-car-picture-id486567614?k=6&m=486567614&s=612x612&w=0&h=zhdK3Fgz9SZ1jI43TVmakeQo0Fl5FxZY-IZedo8xb1k=)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
      
         # header
 
