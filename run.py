@@ -1,20 +1,21 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Input, Output
 import pandas as pd
 import plotly as ply
 import base64
 import dash_table
-from dash.dependencies import Input, Output
 from sklearn.externals import joblib
-import pandas as pd
-
 
 #table content declaration
+
+
+
+
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
-app.config.suppress_callback_exceptions = True
 server = app.server
 app.layout = html.Div([
 
@@ -24,8 +25,8 @@ app.layout = html.Div([
 
 ])
 
-
 df = pd.read_csv('insurance_75000.csv',encoding='latin1')
+app.config.suppress_callback_exceptions = True
 x=df[["VehicleReg","CustomerName","Package","AddonDate","Make","Model","CC","GearType","Gender","Address","VehicleType","VehicleWidth","VehicleHeight","FuelType","BrakeOperation","AvgFuelConsumption","StatusText","Speed","Odo","AssembledDate","Place"]]
 y=df["Premium"]
 from sklearn.preprocessing import LabelEncoder
@@ -62,16 +63,6 @@ x['VehicleReg_n']=le_VehicleReg.fit_transform(x['VehicleReg'])
 x['StatusText_n']=le_StatusText.fit_transform(x['StatusText'])
 x['AssembledDate_n']=le_AssembledDate.fit_transform(x['AssembledDate'])
 x['Place_n']=le_Place.fit_transform(x['Place'])
-
-d_speed = df['Speed'].unique()
-d_odo = df['Odo'].unique()
-d_brakeoperation = x['BrakeOperation_n'].unique()
-d_addon = x['AddonDate_n'].unique()
-d_customername = x['CustomerName_n'].unique()
-d_vehiclereg = x['VehicleReg_n'].unique()
-d_statustext = x['StatusText_n'].unique()
-d_assembleddate = x['AssembledDate_n'].unique()
-d_place = x['Place_n'].unique()
 
 index_page = html.Div(style={'backgroundImage': 'url(https://www.carconfident.ca/wp-content/uploads/2019/05/01585ca88d26024.jpg)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
  
@@ -139,15 +130,21 @@ def display_page(pathname):
 
 
 
-
-
+d_speed = df['Speed'].unique()
+d_odo = df['Odo'].unique()
+d_brakeoperation = x['BrakeOperation_n'].unique()
+d_addon = x['AddonDate_n'].unique()
+d_customername = x['CustomerName_n'].unique()
+d_vehiclereg = x['VehicleReg_n'].unique()
+d_statustext = x['StatusText_n'].unique()
+d_assembleddate = x['AssembledDate_n'].unique()
+d_place = x['Place_n'].unique()
 
 colors = {
     'background': '#111111',
     'text':'#FFFFFF',
-    
-    }
 
+    }
 
 all_options = {
 
@@ -158,6 +155,11 @@ all_options = {
     'All': ['Model','CC','VehicleWidth','VehicleHeight','AvgFuelConsumption','Speed','Odo','Place','AssembbledDate','AddonDate','VehicleReg','CustomerName','Package','Make','GearType','Gender','Address','VehicleType','FuelType','BrakeOperation','StatusText']
 
 }
+
+
+
+
+
 
 
 
@@ -207,368 +209,6 @@ insurance_data = {
 
 }
 
-model_layout = html.Div(children=[
-  html.H2(className='what-is', children="Decision Tree Results",style={ 'color':'black','text-align': 'center', 'fontSize': 35, 'font-family': 'EB Garamond'}),
-
-    html.Div(children=[
-    html.Div([
-
-         html.Div(
-            [
-                html.Label('Enter Model: '),
-                dcc.Dropdown(
-                        id = 'CC1',
-                        options=[{'label': k, 'value': k} for k in  [2016,2017,2018,2013,2015]],
-                        value='2016',
-
-                ),
-            ],
-            className='four columns',
-            style={'margin-top': '10'}
-        ),
-             html.Div(
-                [
-                    html.Label('Enter CC: '),
-                    dcc.Dropdown(
-                            id = 'CC2',
-                            options=[{'label': k, 'value': k} for k in  [1300,1800]],
-                            value='1300',
-
-                    ),
-                ],
-                className='four columns',
-                style={'margin-top': '10'}
-            ),
-             html.Div(
-                [
-                    html.Label('Enter Vehicle Width: '),
-                    dcc.Dropdown(
-                            id = 'CC3',
-                            options=[{'label': k, 'value': k} for k in  [5,0]],
-                            value='5',
-
-                    ),
-                ],
-                className='four columns',
-                style={'margin-top': '10'}
-            ),
-             ], className="row"
-    ),
-    ## 2nd row
-        html.Div([
-
-             html.Div(
-                [
-                    html.Label('Enter Vehicle Height: '),
-                    dcc.Dropdown(
-                            id = 'CC4',
-                            options=[{'label': k, 'value': k} for k in  [3,0]],
-                            value='3',
-
-                    ),
-                ],
-                className='four columns',
-                style={'margin-top': '20'}
-            ),
-                 html.Div(
-                    [
-                        html.Label('Enter Average fuel consumption: '),
-                        dcc.Dropdown(
-                                id = 'CC5',
-                                options=[{'label': k, 'value': k} for k in  [11,8]],
-                                value='11',
-
-                        ),
-                    ],
-                    className='four columns',
-                    style={'margin-top': '20'}
-                ),
-                 html.Div(
-                    [
-                        html.Label('Enter Fuel Type: '),
-                        dcc.Dropdown(
-                                id = 'CC6',
-                                options=[{'label': k, 'value': k} for k in  [1,0]],
-                                value='1',
-
-                        ),
-                    ],
-                    className='four columns',
-                    style={'margin-top': '20'}
-                ),
-                 ], className="row"
-        ),
-#3rd
-
-    html.Div([
-
-         html.Div(
-            [
-                html.Label('Enter Vehicle Type: '),
-                dcc.Dropdown(
-                        id = 'CC7',
-                        options=[{'label': k, 'value': k} for k in  [1,0]],
-                        value='1',
-
-                ),
-            ],
-            className='four columns',
-            style={'margin-top': '20'}
-        ),
-             html.Div(
-                [
-                    html.Label('Enter Address: '),
-                    dcc.Dropdown(
-                            id = 'CC8',
-                            options=[{'label': k, 'value': k} for k in  [1,0]],
-                            value='1',
-
-                    ),
-                ],
-                className='four columns',
-                style={'margin-top': '20'}
-            ),
-             html.Div(
-                [
-                    html.Label('Enter Gender: '),
-                    dcc.Dropdown(
-                            id = 'CC9',
-                            options=[{'label': k, 'value': k} for k in  [1,0]],
-                            value='1',
-
-                    ),
-                ],
-                className='four columns',
-                style={'margin-top': '20'}
-            ),
-             ], className="row"
-    ),
-    #4th
-        html.Div([
-
-             html.Div(
-                [
-                    html.Label('Enter Gear type '),
-                    dcc.Dropdown(
-                            id = 'CC11',
-                            options=[{'label': k, 'value': k} for k in  [1,0]],
-                            value='1',
-
-                    ),
-                ],
-                className='four columns',
-                style={'margin-top': '20'}
-            ),
-                 html.Div(
-                    [
-                        html.Label('Enter make: '),
-                        dcc.Dropdown(
-                                id = 'CC12',
-                                options=[{'label': k, 'value': k} for k in  [1,0]],
-                                value='1',
-
-                        ),
-                    ],
-                    className='four columns',
-                    style={'margin-top': '20'}
-                ),
-                 html.Div(
-                    [
-                        html.Label('Enter Package: '),
-                        dcc.Dropdown(
-                                id = 'CC13',
-                                options=[{'label': k, 'value': k} for k in  [1,0]],
-                                value='1',
-
-                        ),
-                    ],
-                    className='four columns',
-                    style={'margin-top': '20'}
-                ),
-                 ], className="row"
-        ),
-     #5th
-             html.Div([
-
-                  html.Div(
-                     [
-                         html.Label('Enter speed '),
-                         dcc.Dropdown(
-                                 id = 'CC14',
-                                 options=[{'label': k, 'value': k} for k in  d_speed],
-                                 value='27',
-
-                         ),
-                     ],
-                     className='four columns',
-                     style={'margin-top': '20'}
-                 ),
-                      html.Div(
-                         [
-                             html.Label('Enter Odo: '),
-                             dcc.Dropdown(
-                                     id = 'CC15',
-                                     options=[{'label': k, 'value': k} for k in  d_odo],
-                                     value='57',
-
-                             ),
-                         ],
-                         className='four columns',
-                         style={'margin-top': '20'}
-                     ),
-                      html.Div(
-                         [
-                             html.Label('Enter Addon Date: '),
-                             dcc.Dropdown(
-                                     id = 'CC16',
-                                     options=[{'label': k, 'value': k} for k in  d_addon],
-                                     value='18:27.1',
-
-                             ),
-                         ],
-                         className='four columns',
-                         style={'margin-top': '20'}
-                     ),
-                      ], className="row"
-             ),
-#6th
-     html.Div([
-
-          html.Div(
-             [
-                 html.Label('Enter customer name '),
-                 dcc.Dropdown(
-                         id = 'CC17',
-                         options=[{'label': k, 'value': k} for k in  d_customername],
-                         value='33',
-
-                 ),
-             ],
-             className='four columns',
-             style={'margin-top': '20'}
-         ),
-              html.Div(
-                 [
-                     html.Label('Enter vehicle registration number: '),
-                     dcc.Dropdown(
-                             id = 'CC18',
-                             options=[{'label': k, 'value': k} for k in  d_vehiclereg],
-                             value='33',
-
-                     ),
-                 ],
-                 className='four columns',
-                 style={'margin-top': '20'}
-             ),
-              html.Div(
-                 [
-                     html.Label('Enter status text: '),
-                     dcc.Dropdown(
-                             id = 'CC19',
-                             options=[{'label': k, 'value': k} for k in  d_statustext],
-                             value='0',
-
-                     ),
-                 ],
-                 className='four columns',
-                 style={'margin-top': '20'}
-             ),
-              ], className="row"
-     ),
-
-
-#7th
-
-     html.Div([
-
-          html.Div(
-             [
-                 html.Label('Enter assembled date'),
-                 dcc.Dropdown(
-                         id = 'CC22',
-                         options=[{'label': k, 'value': k} for k in  d_assembleddate],
-                         value='2219',
-
-                 ),
-             ],
-             className='four columns',
-             style={'margin-top': '20'}
-         ),
-              html.Div(
-                 [
-                     html.Label('Enter encoded place: '),
-                     dcc.Dropdown(
-                             id = 'CC23',
-                             options=[{'label': k, 'value': k} for k in  d_place],
-                             value='13716',
-
-                     ),
-                 ],
-                 className='four columns',
-                 style={'margin-top': '20'}
-             ),
-              html.Div(
-                 [
-                     html.Label('Enter BrakeOperation: '),
-
-                     dcc.Dropdown(
-                             id = 'CC24',
-                             options=[{'label': k, 'value': k} for k in  d_brakeoperation],
-                             value='0',
-
-                     ),
-                 ],
-                 className='four columns',
-                 style={'margin-top': '20'}
-             ),
-              ], className="row"
-     ),
-
-
-
-        html.Div(style={ 'color':'black','text-align': 'center', 'fontSize': 25, 'font-family': 'EB Garamond'},id='result')
-
-    ], style={ 'color':'black','text-align': 'center', 'fontSize': 20, 'font-family': 'EB Garamond'}),
-
-
-])
-
-
-@app.callback(
-    dash.dependencies.Output(component_id='result', component_property='children'),
-    [dash.dependencies.Input(component_id='CC1', component_property='value'),
-    dash.dependencies.Input(component_id='CC2', component_property='value'),
-    dash.dependencies.Input(component_id='CC3', component_property='value'),
-    dash.dependencies.Input(component_id='CC4', component_property='value'),
-    dash.dependencies.Input(component_id='CC5', component_property='value'),
-    dash.dependencies.Input(component_id='CC6', component_property='value'),
-    dash.dependencies.Input(component_id='CC7', component_property='value'),
-    dash.dependencies.Input(component_id='CC8', component_property='value'),
-    dash.dependencies.Input(component_id='CC9', component_property='value'),
-    dash.dependencies.Input(component_id='CC11', component_property='value'),
-   dash.dependencies. Input(component_id='CC12', component_property='value'),
-    dash.dependencies.Input(component_id='CC13', component_property='value'),
-    dash.dependencies.Input(component_id='CC14', component_property='value'),
-    dash.dependencies.Input(component_id='CC15', component_property='value'),
-    dash.dependencies.Input(component_id='CC16', component_property='value'),
-    dash.dependencies.Input(component_id='CC17', component_property='value'),
-    dash.dependencies.Input(component_id='CC18', component_property='value'),
-    dash.dependencies.Input(component_id='CC19', component_property='value'),
-    dash.dependencies.Input(component_id='CC22', component_property='value'),
-    dash.dependencies.Input(component_id='CC23', component_property='value'),
-    dash.dependencies.Input(component_id='CC24', component_property='value'),
-    ])
-
-def update_years_of_experience_input(CC1,CC2,CC3,CC4,CC5,CC6,CC7,CC8,CC9,CC11,CC12,CC13,CC14,CC15,CC16,CC17,CC18,CC19,CC22,CC23,CC24):
-    xnew1 = [[CC1,CC2,CC3,CC4,CC5,CC6,CC7,CC8,CC9,CC11,CC12,CC13,CC14,CC15,CC16,CC17,CC18,CC19,CC22,CC23,CC24]]
-    if xnew1 is not None and xnew1 is not '':
-        try:
-            salary = model.predict(xnew1)[0]
-
-            return "Result Of Above Selected Categories Provide Premium Figure  {}".format(salary)
-        except ValueError:
-            return ''
-
 
 app.config.suppress_callback_exceptions = True
 
@@ -576,15 +216,16 @@ graph_layout = html.Div([
     html.H1(children='Graphical Reresenatiom Of Models With Numeric & Non-Numeric Attributes',style={ 'color':'black','text-align': 'center', 'fontSize': 30, 'font-family': 'EB Garamond'},
            ),
 
-    
+
            html.Div(
                 [
                     html.P(children='Select Category',
                            style={
                               'text-align': 'center',
-                              'fontSize':21,
+                    #          'fontSize':21,
                               'color': 'black',
-                              'font-family': 'Josefin Sans',}),
+                    #          'font-family': 'Josefin Sans',}),
+                    }),
                     dcc.RadioItems(
                             id = 'Category',
                             options=[{'label': k, 'value': k} for k in all_options.keys()],
@@ -593,11 +234,11 @@ graph_layout = html.Div([
                             labelStyle={'display': 'inline-block'}
                     ),
                 ],
-               
+
             ),
-             
+
      html.Br(),
-    
+
 
 
             html.Div(
@@ -607,34 +248,35 @@ graph_layout = html.Div([
                               'text-align': 'center',
                               'fontSize': 21,
                               'color': 'black',
-                              'font-family': 'Josefin Sans'}),
+                    #          'font-family': 'Josefin Sans'}),
+                    }),
              dcc.Checklist(
                     id='Features',
 
 
 
                     values=['Package'],
-                    
-                     
+
+
                      labelStyle={'display': 'inline-block'},
                      style={
                          'color': 'black',
                          'text-align': 'center',
-                         'font-family': 'Josefin Sans',
+                       'font-family': 'Josefin Sans',
                          'fontSize': 15
-                         
+
                      }
-                    
-                 
+
+
                     ),
                 ],
-                
+
             ),
-          
+
    html.Br(),
    html.Br(),
-   
-  
+
+
     html.Div([
 
         html.Div([
@@ -646,7 +288,7 @@ graph_layout = html.Div([
             )], className= 'six columns'
 
             ),
-   
+
 
         html.Div([
 
@@ -664,7 +306,7 @@ graph_layout = html.Div([
 
 
     html.Div(id='page-1-content'),
-   
+
 ], className='ten columns offset-by-one')
 
 
@@ -718,7 +360,7 @@ def update_image_src(selector):
 
                 color='#7f7f7f',
 
-                
+
 
             )),
 
@@ -803,20 +445,399 @@ def update_image_src(selector):
 
     return figure
 
+model_layout = html.Div(children=[
+    html.H2(className='what-is', children="Decision Tree Results",style={ 'color':'black','text-align': 'center', 'fontSize': 35, 'font-family': 'EB Garamond'}),
+   
+  html.A(style={'text-align': 'center','color':'red'},children="Need to download the encoded Guide list  click here!",
+             download="insurance_75000.csv",
+             href="",
+            target="_blank"
+),
+    
+  
+        html.Link(href="https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css",rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Dosis", rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Open+Sans", rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Ubuntu", rel="stylesheet"),
+        html.Link(href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" ,rel="stylesheet"),
+        html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet"),
+        html.A(style={'text-align': 'center','color':'red'},children="Need to download the encoded Guide list  click here!",
+             download="insurance_75000.csv",
+             href="",
+            target="_blank"
+),
+      
+    html.Div(children=[
+    html.Div([
 
+         html.Div(
+            [
+                html.Label('Enter Model '),
+                dcc.Dropdown(
+                        id = 'CC1',
+                        options=[{'label': k, 'value': k} for k in  [2016,2017,2018,2013,2015]],
+                        value='2016',
+
+                ),
+            ],
+            className='four columns',
+            style={'margin-top': '10'}
+        ),
+             html.Div(
+                [
+                    html.Label('Enter CC '),
+                    dcc.Dropdown(
+                            id = 'CC2',
+                            options=[{'label': k, 'value': k} for k in  [1300,1800]],
+                            value='1300',
+
+                    ),
+                ],
+                className='four columns',
+                style={'margin-top': '10'}
+            ),
+             html.Div(
+                [
+                    html.Label('Enter Vehicle Width '),
+                    dcc.Dropdown(
+                            id = 'CC3',
+                            options=[{'label': k, 'value': k} for k in  [5,0]],
+                            value='5',
+
+                    ),
+                ],
+                className='four columns',
+                style={'margin-top': '10'}
+            ),
+             ], className="row"
+    ),
+    ## 2nd row
+        html.Div([
+
+             html.Div(
+                [
+                    html.Label('Enter Vehicle Height '),
+                    dcc.Dropdown(
+                            id = 'CC4',
+                            options=[{'label': k, 'value': k} for k in  [3,0]],
+                            value='3',
+
+                    ),
+                ],
+                className='four columns',
+                style={'margin-top': '20'}
+            ),
+                 html.Div(
+                    [
+                        html.Label('Enter Average Fuel Consumption '),
+                        dcc.Dropdown(
+                                id = 'CC5',
+                                options=[{'label': k, 'value': k} for k in  [11,8]],
+                                value='11',
+
+                        ),
+                    ],
+                    className='four columns',
+                    style={'margin-top': '20'}
+                ),
+                 html.Div(
+                    [
+                        html.Label('Enter Fuel Type '),
+                        dcc.Dropdown(
+                                id = 'CC6',
+                                options=[{'label': k, 'value': k} for k in  [1,0]],
+                                value='1',
+
+                        ),
+                    ],
+                    className='four columns',
+                    style={'margin-top': '20'}
+                ),
+                 ], className="row"
+        ),
+#3rd
+
+    html.Div([
+
+         html.Div(
+            [
+                html.Label('Enter Vehicle Type'),
+                dcc.Dropdown(
+                        id = 'CC7',
+                        options=[{'label': k, 'value': k} for k in  [1,0]],
+                        value='1',
+
+                ),
+            ],
+            className='four columns',
+            style={'margin-top': '20'}
+        ),
+             html.Div(
+                [
+                    html.Label('Enter Address '),
+                    dcc.Dropdown(
+                            id = 'CC8',
+                            options=[{'label': k, 'value': k} for k in  [1,0]],
+                            value='1',
+
+                    ),
+                ],
+                className='four columns',
+                style={'margin-top': '20'}
+            ),
+             html.Div(
+                [
+                    html.Label('Enter Gender: '),
+                    dcc.Dropdown(
+                            id = 'CC9',
+                            options=[{'label': k, 'value': k} for k in  [1,0]],
+                            value='1',
+
+                    ),
+                ],
+                className='four columns',
+                style={'margin-top': '20'}
+            ),
+             ], className="row"
+    ),
+    #4th
+        html.Div([
+
+             html.Div(
+                [
+                    html.Label('Enter Gear Type '),
+                    dcc.Dropdown(
+                            id = 'CC11',
+                            options=[{'label': k, 'value': k} for k in  [1,0]],
+                            value='1',
+
+                    ),
+                ],
+                className='four columns',
+                style={'margin-top': '20'}
+            ),
+                 html.Div(
+                    [
+                        html.Label('Enter Make'),
+                        dcc.Dropdown(
+                                id = 'CC12',
+                                options=[{'label': k, 'value': k} for k in  [1,0]],
+                                value='1',
+
+                        ),
+                    ],
+                    className='four columns',
+                    style={'margin-top': '20'}
+                ),
+                 html.Div(
+                    [
+                        html.Label('Enter Package'),
+                        dcc.Dropdown(
+                                id = 'CC13',
+                                options=[{'label': k, 'value': k} for k in  [1,0]],
+                                value='1',
+
+                        ),
+                    ],
+                    className='four columns',
+                    style={'margin-top': '20'}
+                ),
+                 ], className="row"
+        ),
+     #5th
+             html.Div([
+
+                  html.Div(
+                     [
+                         html.Label('Enter Speed '),
+                         dcc.Dropdown(
+                                 id = 'CC14',
+                                 options=[{'label': k, 'value': k} for k in  d_speed],
+                                 value='27',
+
+                         ),
+                     ],
+                     className='four columns',
+                     style={'margin-top': '20'}
+                 ),
+                      html.Div(
+                         [
+                             html.Label('Enter Odo '),
+                             dcc.Dropdown(
+                                     id = 'CC15',
+                                     options=[{'label': k, 'value': k} for k in  d_odo],
+                                     value='57',
+
+                             ),
+                         ],
+                         className='four columns',
+                         style={'margin-top': '20'}
+                     ),
+                      html.Div(
+                         [
+                             html.Label('Enter Add-on-Date '),
+                             dcc.Dropdown(
+                                     id = 'CC16',
+                                     options=[{'label': k, 'value': k} for k in  d_addon],
+                                     value='18:27.1',
+
+                             ),
+                         ],
+                         className='four columns',
+                         style={'margin-top': '20'}
+                     ),
+                      ], className="row"
+             ),
+#6th
+     html.Div([
+
+          html.Div(
+             [
+                 html.Label('Enter Customer Name '),
+                 dcc.Dropdown(
+                         id = 'CC17',
+                         options=[{'label': k, 'value': k} for k in  d_customername],
+                         value='33',
+
+                 ),
+             ],
+             className='four columns',
+             style={'margin-top': '20'}
+         ),
+              html.Div(
+                 [
+                     html.Label('Enter Vehicle Registration Number '),
+                     dcc.Dropdown(
+                             id = 'CC18',
+                             options=[{'label': k, 'value': k} for k in  d_vehiclereg],
+                             value='33',
+
+                     ),
+                 ],
+                 className='four columns',
+                 style={'margin-top': '20'}
+             ),
+              html.Div(
+                 [
+                     html.Label('Enter Status Text '),
+                     dcc.Dropdown(
+                             id = 'CC19',
+                             options=[{'label': k, 'value': k} for k in  d_statustext],
+                             value='0',
+
+                     ),
+                 ],
+                 className='four columns',
+                 style={'margin-top': '20'}
+             ),
+              ], className="row"
+     ),
+
+
+#7th
+
+     html.Div([
+
+          html.Div(
+             [
+                 html.Label('Enter Assembled Date'),
+                 dcc.Dropdown(
+                         id = 'CC22',
+                         options=[{'label': k, 'value': k} for k in  d_assembleddate],
+                         value='2219',
+
+                 ),
+             ],
+             className='four columns',
+             style={'margin-top': '20'}
+         ),
+              html.Div(
+                 [
+                     html.Label('Enter Encoded Place: '),
+                     dcc.Dropdown(
+                             id = 'CC23',
+                             options=[{'label': k, 'value': k} for k in  d_place],
+                             value='13716',
+                           
+                     ),
+                 ],
+                 className='four columns',
+                 style={'margin-top': '20'}
+             ),
+              html.Div(
+                 [
+                     html.Label('Enter Brake-Operation '),
+
+                     dcc.Dropdown(
+                             id = 'CC24',
+                             options=[{'label': k, 'value': k} for k in  d_brakeoperation],
+                             value='0',
+                             
+
+                     ),
+                 ],
+                 className='four columns',
+                 style={'margin-top': '20'}
+             ),
+              ], className="row"
+     ),
+
+
+
+        html.Div(id='result')
+
+    ], style={'textAlign': 'center'}),
+
+
+])
+
+
+@app.callback(
+    Output(component_id='result', component_property='children'),
+    [Input(component_id='CC1', component_property='value'),
+    Input(component_id='CC2', component_property='value'),
+    Input(component_id='CC3', component_property='value'),
+    Input(component_id='CC4', component_property='value'),
+    Input(component_id='CC5', component_property='value'),
+    Input(component_id='CC6', component_property='value'),
+    Input(component_id='CC7', component_property='value'),
+    Input(component_id='CC8', component_property='value'),
+    Input(component_id='CC9', component_property='value'),
+    Input(component_id='CC11', component_property='value'),
+    Input(component_id='CC12', component_property='value'),
+    Input(component_id='CC13', component_property='value'),
+    Input(component_id='CC14', component_property='value'),
+    Input(component_id='CC15', component_property='value'),
+    Input(component_id='CC16', component_property='value'),
+    Input(component_id='CC17', component_property='value'),
+    Input(component_id='CC18', component_property='value'),
+    Input(component_id='CC19', component_property='value'),
+    Input(component_id='CC22', component_property='value'),
+    Input(component_id='CC23', component_property='value'),
+    Input(component_id='CC24', component_property='value'),
+    ])
+
+def update_years_of_experience_input(CC1,CC2,CC3,CC4,CC5,CC6,CC7,CC8,CC9,CC11,CC12,CC13,CC14,CC15,CC16,CC17,CC18,CC19,CC22,CC23,CC24):
+    xnew1 = [[CC1,CC2,CC3,CC4,CC5,CC6,CC7,CC8,CC9,CC11,CC12,CC13,CC14,CC15,CC16,CC17,CC18,CC19,CC22,CC23,CC24]]
+    if xnew1 is not None and xnew1 is not '':
+        try:
+            salary = model.predict(xnew1)[0]
+
+            return "suggested premium is {}".format(salary)
+        except ValueError:
+            return ''
 #app main layout
-car_layout = html.Div(style={'backgroundImage': 'url(https://media.istockphoto.com/photos/toy-car-picture-id486567614?k=6&m=486567614&s=612x612&w=0&h=zhdK3Fgz9SZ1jI43TVmakeQo0Fl5FxZY-IZedo8xb1k=)','backgroundRepeat': 'no-repeat', 'backgroundPosition': 'center', 'backgroundSize': 'cover', 'position': 'fixed', 'height' : "100%", 'width':"100%"},children=[
-     
+car_layout = html.Div(children=[
         # header
 
-        html.Div(style={'backgroundColor': '#262B3D'}, children=[
+        html.Div([
              html.Div(
                 html.Img(src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABECAYAAAA1DeP1AAAACXBIWXMAAAsSAAALEgHS3X78AAAFcklEQVR42uWcT2hcRRzHv6leFCUL3lR4C5WiYJd36EVI2sWLEARzUCKe9uBBvHQLHqwIBi/xuCLUHLa4ClYQITl5LKtGUBCywaqkbDGtQvwH2SY1scTuz8vvwY9xfjvzdqfZ9/YNPJjM++28mc+bP7/5zrxMERFyEkoA5jm+CqAXMvOpnICIAbQBTPPfNwFUAXSKBmILQGSkXQFwsmggtEJOhXrAsZyMD31L2p2QD8gLiA8safcAaBatawBAXcwaXwN4g+MXAbxcJBBmqImW8gXPIoUEkcB4D8ADAK4BeGzSx4jEl2ixP9FgB6sFYBbALQDHAXQnvUWU2XmaVvyIGMCXAB4ctmUcy1EXmDbSnhSDZAfAaQC7omVEkwjicSW9IuIdAGcEjJ/SwMgLiFtK+l/G3x2u/BUA96WCQUR5udbp/6FPRAsW2xIRfc82+0QUufLPEwgQ0QwR1bliLQGkqcDoCBiVSQJhXospYGitZyJAgIhqHjBaLhihClPlt7NIRGWlMHUiarNNyWITc4HbbGu73xGVbigwrnIeLaMsEsYPZllCv5EkzBs2HeP+lgEjtuTRMvLYstgsi/uvWu73jOdctti0Q4H4W8ucr3NkD+eFzbeKTTLAVZT7OyKPpmLztrDpKjblEH7E/Za0p0T8OeV3z4j4CcXmaaFRuoLmVp8W8YcUm0dDgPjXIaG976E6bSryXIPj1wH8ZrFZ9njOqohvKOVfC9E1zvEAZIausPlGaZLJKB8R0Z6l2UtHKGKnaoevJUtZmkr+ctC+Ju4fJrNIqNVnBcBL/NY2AXxq0QjmuAtsA3gCwFsWhWkBwCkAr/DvD9j2esr9jxqAlQG/K/G1dbdd7JiIdi0tw3f+L6d1kUe97mbmMRHd5MpsK5WpOZqxCaPEv1lk3yVzIMrCGWqIuVvC2PeAsT7ART4goh+NMaCRJRAldlw0h8lnJVgTg2V3AIxBvsbYQVxUCvhaymVx7IDRU55TDwEihB9xXEl/VsR7LLJuCMFkxiKqzALYswixPQA/K8/5Lsym4ug068qb+nDIZbE2yEZEdNt4xnrWBst1h8NkXq0UMPYNGJcGrFAzMX1WuHAVo5UMC6N0lL7EOAWTTMEYt3qElNrjARF9zl2jbdE9xg5iXkxvPQZgg9H1GHBdMMzwYlZAaKJJ1QC1N8LaA0Q0qzznRlZAXFIKuJzCYfKBUfdQqcYKQpPI2o5p0QeG6Sf0U0zRRw4iUgr4q8eqdEeZCbSutMBiSmYdqgX2AomI/uSpLqmEtq64McLaYy4v06fP8tt3IeYSeDLvR/hU1BeGufYoZ1WY8YVxkitQ9XCY5E6V7Ep3DN0jPmoQMU9h8wOcqraoRElZcSaho4g35k5VJGx+t9j8EQpEiSWvHl8NhxucVMLc+zTDpvHWb1tsLju2Don9FNe2wFwIEA1Lxh879iXNAq56FNAWDj3ykP7ItmIzE0KhOmvRa17wOL/0sIifUmxOOHbE5JGgTzx2qlqW+78AWAuhUJFyJEf6CLaw4vAu+wb1tsVmyeGl2hymJW4ZO4r3OnTX6CqViBy7yBcGqFSHir7Q5Ep0ByhMkRB4juzASfJgWdF/lMo0+Q10Q/v5Wbi0uX/VoRzVJg3GoJutFDA+4m24NkOsThKItDAGCTO5B2HCsJ1JuKCA+CxPIHx2umoA3uVTMK9bPh+6qvzuTK6+/AigSGvCzMqkdQ0fGG8aMLqTNli6YKxYBNaZPE6fw56hkh+WjfQtVVbCKIfJYgBfhfiwLAthlPMRHePDskM+GynPRxYChITRB3CvSD8LYLFIIBJdwpbP80UDsaukP1I0EGuw/3eP5aKBSGaQDQbSA/AOgPN5AvEfhe++jTQt3lAAAAAASUVORK5CYII=',height="75%")
                 ,style={"float":"left","height":"75%"}),
 
 
             html.Span("Predicition Of Vehicle Insurance Premium", style={'font-family': 'Cookie','fontSize': 30},className='app-title'),
-            
+
             html.Div(
                 html.Img(src='https://www.moneymagpie.com/wp-content/uploads/2015/06/MoneyMagpie_Car-Insurance-Protect.jpg',height="100%")
                 ,style={"float":"right","height":"100%"})
@@ -838,17 +859,17 @@ car_layout = html.Div(style={'backgroundImage': 'url(https://media.istockphoto.c
        html.Br(),
       html.Br(),
              html.Div(id='tabs-content')
-            
-           
+
+
             ],
             className="row tabs_div"
             ),
 
-                
-        
+
+
         # Tab content
         html.Div(id="tab_content", className="row", style={"margin": "2% 3%"}),
-        
+
         html.Link(href="https://use.fontawesome.com/releases/v5.2.0/css/all.css",rel="stylesheet"),
         html.Link(href="https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css",rel="stylesheet"),
         html.Link(href="https://fonts.googleapis.com/css?family=Dosis", rel="stylesheet"),
@@ -858,9 +879,9 @@ car_layout = html.Div(style={'backgroundImage': 'url(https://media.istockphoto.c
         html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet")
     ],
     className="row",
-    
-   
-    
+
+
+
 
 
 )
@@ -870,22 +891,17 @@ car_layout = html.Div(style={'backgroundImage': 'url(https://media.istockphoto.c
 def render_content(tab):
     if tab == 'about_layout':
         return  html.Div(className='control-tab',children=[
-                
-
-
-
-
 
               html.H2(className='what-is', children="About Our Project",style={ 'color':'black','text-align': 'center', 'fontSize': 35, 'font-family': 'EB Garamond'}),
-                 
+
                         html.P('The project Predication of vehicle insurance premium is a research project designed for predicting the premium based on driver behavior.The goal of this project is to see how well various statistical methods perform in predicting of insurance premium based on the characteristics of the insured customer’s vehicles.Prediction of Vehicle Insurance Premium will help the insurance issuers to calculate the accurate insurance and also enable the owner of the vehicle to calculate the insurance of their own vehicle by themselves for this particular dataset available from “TPL Trakker LTD” company. A number of factors will determine premium calculation rates, among them a drivers, age, Vehicle registration number ,Vehicle Model number ,Type of vehicle ,Crashes and injuries ,Claim history, Occupation, Driver behavior, Add on Date, Make, Model, Gear Type, Gender, Brake Operation, Vehicle width, Vehicle height, Average Fuel Consumption respectively.However, this contest focused on the relationship between customer’s behavior and vehicle characteristics well as other characteristics associated with the insurance premium policies.',style={ 'color': 'black','fontSize': 15,'font-family': 'Philosopher'}),
-                       
+
                        html.P('This application has a Dashboard named “DASHBOARD” which is built by using the Python Command which is a graphical user interface and enable us to see the result in more precisely and visualized form. DASHBOARD itself is a proper platform that help to integrate the backhand for the user graphical representation. It contains “.py” extension of files that enable us to understand all the successful result and plotly graphs for better understanding of the project. It all the files contain all interfaced controls and designed parts and enable to integrate the backhand codes with these controls and frontend styling ',style={ 'color': 'black','fontSize': 15,'font-family': 'Philosopher'}),
 
                        html.P('While After running the application (DASHBOARD) the UX will appear on the screen having dashboard view with the Heading name PREDICTION OF VEHICLE INSURANCE PREMIUM moreover we have graph summary view, data summary view, visualizations view of models with their confusion matrix On the other hand the backend working is carried out through different algorithms that are random forest and logistic regressions svm, knn, decision tree through which working on the whole data is being carried on.',style={ 'color': 'black','fontSize': 15,'font-family': 'Philosopher'}),
 
                         html.P('Decision Tree is used first finding the importance of variables and Confusion matrix is being obtained. Furthermore it also defines accuracy and in our case it is ’93.86%’ with its graphical representation and confusion matrix calculation respectively.',style={'color':'black','fontSize': 15,'font-family': 'Philosopher'}),
-                     html.Div(style={ 'color':'black','fontSize': 10 ,'font-family': 'Philosopher'},children=[
+                   html.Div(style={ 'color':'black','fontSize': 10 ,'font-family': 'Philosopher'},children=[
                             'Reference: ',
                             html.A('PlotlyDash',
                                    href='https://plot.ly/dash/)',style={ 'color':'black','fontSize': 10, 'font-family': 'Philosopher'})
@@ -897,7 +913,7 @@ def render_content(tab):
                             '.'
                         ]),
                      
-                        
+
         ],style={'marginBottom': 20, 'marginTop': 25})
 
 
@@ -905,17 +921,16 @@ def render_content(tab):
         return html.Div([
 
             html.H2(className='what-is', children="Customer & Vehicle DataSet Records",style={ 'color':'black','text-align': 'center', 'fontSize': 30, 'font-family': 'EB Garamond'}),
-             
-            
+
+
              html.A(style={ 'text-align': 'center','color':'red'},children="Need to download the data then click here!",
-           
-           
+
+
              download="insurance_75000.csv",
              href="",
             target="_blank"
 
              ),
-
 
 
              dash_table.DataTable(
@@ -926,25 +941,24 @@ def render_content(tab):
             style_header={'backgroundColor': '#E8E4E7',
              'color': 'black'},
             style_cell={
-            'backgroundColor': '#E5E8E6',
+           
             'color': 'black'
     },
-),  
-    
-          
+),
 
- 
+
+
+
 ]),
 
     elif tab == 'graph_layout':
        return graph_layout
 
     elif tab == 'model_layout':
-       return model_layout
+          return model_layout
 
 
 
 if __name__ == '__main__':
     model = joblib.load("Trees_model.pkl")
-
     app.run_server(debug=True)
