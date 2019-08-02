@@ -8,7 +8,7 @@ import dash_table
 from dash.dependencies import Input, Output
 from sklearn.externals import joblib
 import pandas as pd
-import plotly.graph_objs as gos
+
 
 #table content declaration
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
