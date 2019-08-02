@@ -216,16 +216,15 @@ graph_layout = html.Div([
     html.H1(children='Graphical Reresenatiom Of Models With Numeric & Non-Numeric Attributes',style={ 'color':'black','text-align': 'center', 'fontSize': 30, 'font-family': 'EB Garamond'},
            ),
 
-
+    
            html.Div(
                 [
                     html.P(children='Select Category',
                            style={
                               'text-align': 'center',
-                    #          'fontSize':21,
+                              'fontSize':21,
                               'color': 'black',
-                    #          'font-family': 'Josefin Sans',}),
-                    }),
+                              'font-family': 'Josefin Sans',}),
                     dcc.RadioItems(
                             id = 'Category',
                             options=[{'label': k, 'value': k} for k in all_options.keys()],
@@ -234,11 +233,11 @@ graph_layout = html.Div([
                             labelStyle={'display': 'inline-block'}
                     ),
                 ],
-
+               
             ),
-
+             
      html.Br(),
-
+    
 
 
             html.Div(
@@ -248,35 +247,34 @@ graph_layout = html.Div([
                               'text-align': 'center',
                               'fontSize': 21,
                               'color': 'black',
-                    #          'font-family': 'Josefin Sans'}),
-                    }),
+                              'font-family': 'Josefin Sans'}),
              dcc.Checklist(
                     id='Features',
 
 
 
                     values=['Package'],
-
-
+                    
+                     
                      labelStyle={'display': 'inline-block'},
                      style={
                          'color': 'black',
                          'text-align': 'center',
-                       'font-family': 'Josefin Sans',
+                         'font-family': 'Josefin Sans',
                          'fontSize': 15
-
+                         
                      }
-
-
+                    
+                 
                     ),
                 ],
-
+                
             ),
-
+          
    html.Br(),
    html.Br(),
-
-
+   
+  
     html.Div([
 
         html.Div([
@@ -288,7 +286,7 @@ graph_layout = html.Div([
             )], className= 'six columns'
 
             ),
-
+   
 
         html.Div([
 
@@ -306,7 +304,7 @@ graph_layout = html.Div([
 
 
     html.Div(id='page-1-content'),
-
+   
 ], className='ten columns offset-by-one')
 
 
@@ -360,7 +358,7 @@ def update_image_src(selector):
 
                 color='#7f7f7f',
 
-
+                
 
             )),
 
@@ -444,7 +442,6 @@ def update_image_src(selector):
     }
 
     return figure
-
 model_layout = html.Div(children=[
     html.H2(className='what-is', children="Decision Tree Results",style={ 'color':'black','text-align': 'center', 'fontSize': 35, 'font-family': 'EB Garamond'}),
    
@@ -461,7 +458,7 @@ model_layout = html.Div(children=[
         html.Link(href="https://fonts.googleapis.com/css?family=Ubuntu", rel="stylesheet"),
         html.Link(href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" ,rel="stylesheet"),
         html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet"),
-    
+        
       
     html.Div(children=[
     html.Div([
