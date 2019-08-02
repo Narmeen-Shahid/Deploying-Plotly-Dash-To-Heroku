@@ -461,11 +461,7 @@ model_layout = html.Div(children=[
         html.Link(href="https://fonts.googleapis.com/css?family=Ubuntu", rel="stylesheet"),
         html.Link(href="https://fonts.googleapis.com/css?family=Mountains+of+Christmas&display=swap" ,rel="stylesheet"),
         html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet"),
-        html.A(style={'text-align': 'center','color':'red'},children="Need to download the encoded Guide list  click here!",
-             download="insurance_75000.csv",
-             href="",
-            target="_blank"
-),
+    
       
     html.Div(children=[
     html.Div([
