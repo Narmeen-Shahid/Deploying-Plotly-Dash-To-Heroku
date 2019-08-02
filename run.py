@@ -449,7 +449,7 @@ model_layout = html.Div(children=[
     html.H2(className='what-is', children="Decision Tree Results",style={ 'color':'black','text-align': 'center', 'fontSize': 35, 'font-family': 'EB Garamond'}),
    
   html.A(style={'text-align': 'center','color':'red'},children="Need to download the encoded Guide list  click here!",
-             download="insurance_75000.csv",
+             download="abc.csv",
              href="",
             target="_blank"
 ),
