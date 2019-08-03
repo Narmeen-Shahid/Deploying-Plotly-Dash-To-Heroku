@@ -777,9 +777,10 @@ model_layout = html.Div(children=[
 
 
 
-        html.Div(id='result')
+        html.Div(style={ 'color':'black','text-align': 'center', 'fontSize': 25, 'font-family': 'EB Garamond'},id='result')
 
-    ], style={'textAlign': 'center'}),
+
+    ], style={ 'color':'black','text-align': 'center', 'fontSize': 20, 'font-family': 'EB Garamond'}),
 
 
 ])
@@ -816,7 +817,7 @@ def update_years_of_experience_input(CC1,CC2,CC3,CC4,CC5,CC6,CC7,CC8,CC9,CC11,CC
         try:
             salary = model.predict(xnew1)[0]
 
-            return "suggested premium is {}".format(salary)
+            return "Result Of Above Selected Categories Provide Premium Figure s {}".format(salary)
         except ValueError:
             return ''
 #app main layout
